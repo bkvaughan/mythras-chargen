@@ -73,3 +73,21 @@ describe('file controls', () => {
     expect(loadFromStorage()).toEqual(newCharacter())
   })
 })
+
+describe('Quick-generate', () => {
+  test('a blank character is replaced without asking, landing on the sheet', () => {
+    renderWith(newCharacter())
+    const confirm = vi.spyOn(window, 'confirm')
+    fireEvent.click(screen.getByRole('button', { name: 'Quick-generate' }))
+    expect(confirm).not.toHaveBeenCalled()
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Character Sheet')
+    expect(openStep(/Bonus Skills/)).toBeEnabled()
+  })
+
+  test('a character in progress is replaced only after confirming', () => {
+    renderWith(complete())
+    vi.spyOn(window, 'confirm').mockReturnValueOnce(false)
+    fireEvent.click(screen.getByRole('button', { name: 'Quick-generate' }))
+    expect(loadFromStorage()).toEqual(complete())
+  })
+})

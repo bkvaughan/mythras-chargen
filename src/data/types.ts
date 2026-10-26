@@ -24,6 +24,8 @@ export interface SkillRef {
   skill: string
   specialisation?: string
   hint?: string
+  /** The book's own example specialisations, where the hint gives some ("such as ..."). */
+  examples?: string[]
 }
 
 /** A row of a d100 table; 00 is written as 100. */

@@ -41,7 +41,7 @@ export default function App() {
     <>
       <header className="app-header">
         <h1>Mythras Character Generator</h1>
-        <FileControls character={character} dispatch={dispatch} />
+        <FileControls character={character} dispatch={dispatch} onGenerated={() => setCurrent('sheet')} />
       </header>
       <div className={`layout${view === 'sheet' ? ' sheet-view' : ''}`}>
         <nav className="panel step-nav" aria-label="Creation steps">

@@ -4,8 +4,8 @@ Work through the parts in order. Tick each checkbox when it is done. Each part e
 
 ## Status
 
-- Parts 1-9: complete, approved and committed (one commit per part on `main`)
-- Part 10 (Quick-generate): in progress
+- Parts 1-10: complete, approved and committed (one commit per part on `main`)
+- Part 11 (Polish and release): in progress
 
 ---
 
@@ -173,8 +173,8 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 10: Quick-generate
 
-- [ ] One button that builds a complete random character: random choices at every step (including Ageing where it applies), legal point allocations, then lands on the character sheet
-- [ ] The result is a normal character: every step can be revisited and edited
+- [x] One button that builds a complete random character: random choices at every step (including Ageing where it applies), legal point allocations, then lands on the character sheet
+- [x] The result is a normal character: every step can be revisited and edited
 
 **Tests:** generate 500 characters with different seeds and assert that every one passes every step's validation; Playwright test for the button.
 
