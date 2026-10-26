@@ -101,12 +101,12 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 5: Character model and persistence
 
-- [ ] `Character` type in `src/state/`: choices only (per CLAUDE.md), with `schemaVersion`
-- [ ] Reducer and actions for every choice the wizard makes
-- [ ] Derived view: one function that turns a `Character` into everything the UI displays (attributes, skill table, step validity, points remaining), built on the engine
-- [ ] Invalidation: when an earlier choice changes, clear only the later choices that no longer make sense (for example, changing culture clears culture allocations and a career the new culture does not allow, but keeps characteristics)
-- [ ] Autosave the current character to localStorage and restore it on load
-- [ ] Export the character as a JSON file; import a JSON file with zod validation and a clear error on bad files
+- [x] `Character` type in `src/state/`: choices only (per CLAUDE.md), with `schemaVersion`
+- [x] Reducer and actions for every choice the wizard makes
+- [x] Derived view: one function that turns a `Character` into everything the UI displays (attributes, skill table, step validity, points remaining), built on the engine
+- [x] Invalidation: when an earlier choice changes, clear only the later choices that no longer make sense (for example, changing culture clears culture allocations and a career the new culture does not allow, but keeps characteristics)
+- [x] Autosave the current character to localStorage and restore it on load
+- [x] Export the character as a JSON file; import a JSON file with zod validation and a clear error on bad files
 
 **Tests:** reducer tests for each action; invalidation cases; export then import gives an identical character; a malformed file is rejected with a readable message.
 

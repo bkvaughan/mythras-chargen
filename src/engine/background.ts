@@ -6,6 +6,8 @@ import { SOCIAL_CLASSES, type SocialClass } from '../data/socialClass.ts'
 import type { CultureId, Dice } from '../data/types.ts'
 import { ageCategory } from './bonus.ts'
 import { diceRange, lookupRow, rollD100, type Rng } from './dice.ts'
+import { baseValue, findSkill } from './skills.ts'
+import type { Characteristics } from './types.ts'
 
 export function socialClass(culture: CultureId, d100: number): SocialClass {
   return lookupRow(SOCIAL_CLASSES[culture], d100)
@@ -62,7 +64,8 @@ export function connectionKind(d4: number): ConnectionKind {
 export type MaritalStatus = 'married' | 'betrothed' | 'unmarried'
 
 /** p. 24: at or under a tenth of base Influence (rounded up, R1) is married; at or under base Influence, betrothed. */
-export function maritalStatus(d100: number, baseInfluence: number): MaritalStatus {
+export function maritalStatus(d100: number, c: Characteristics): MaritalStatus {
+  const baseInfluence = baseValue(findSkill('Influence')!.base, c)
   if (d100 <= Math.ceil(baseInfluence * MARRIAGE.marriedFraction)) return 'married'
   if (d100 <= baseInfluence) return 'betrothed'
   return 'unmarried'

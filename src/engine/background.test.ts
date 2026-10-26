@@ -10,6 +10,7 @@ import {
   startingMoney,
 } from './background.ts'
 import { seededRng } from './dice.ts'
+import { ANATHAYM } from './testFixtures.ts'
 
 describe('social class and money (R14)', () => {
   test.each([
@@ -80,10 +81,10 @@ describe('family', () => {
 
   test('marital status against base Influence', () => {
     // Anathaym's base Influence is 18; a tenth is 1.8, rounded up to 2.
-    expect(maritalStatus(2, 18)).toBe('married')
-    expect(maritalStatus(3, 18)).toBe('betrothed')
-    expect(maritalStatus(18, 18)).toBe('betrothed')
-    expect(maritalStatus(19, 18)).toBe('unmarried')
+    expect(maritalStatus(2, ANATHAYM)).toBe('married')
+    expect(maritalStatus(3, ANATHAYM)).toBe('betrothed')
+    expect(maritalStatus(18, ANATHAYM)).toBe('betrothed')
+    expect(maritalStatus(19, ANATHAYM)).toBe('unmarried')
   })
 
   test('child age dice (R21)', () => {
