@@ -92,7 +92,7 @@ Interpretations used where the rules are ambiguous or silent. Status is **Propos
 | R7 | Specialised skills | Craft, Lore, Language, Art, Culture, Musicianship, Healing (species), Teach (species) and magic skills (Devotion, Binding, Invocation) take a free-text specialisation. The same skill may be taken more than once with different specialisations; each is a separate skill. Career-fixed specialisations (for example Craft (Alchemy)) are prefilled | Confirmed |
 | R8 | Career repeats | A professional skill already gained from culture may be one of the career's three professional picks; career points can then go into it (p. 27). Combat Styles are career standard-skill slots and never use a professional pick (Anathaym, p. 28) | Confirmed |
 | R9 | Career combat styles | Slot types (pp. 28–32): "Cultural Style" is the style taken at the culture step, defined now if none was taken. "Specific X or Cultural Style" (Herder, Hunter, Sailor, Scout): the player uses the cultural style or defines a new career style. "Concealable Weapons Style" (Agent, Thief): a new, separate style. Warrior has the Cultural Style plus a separate Speciality Style. New styles start at their base | Confirmed |
-| R10 | Combat style definition | A style has a name (from the culture's example names or custom), free-text weapons, and zero or one trait from the p. 90 list. Base is STR+DEX | Confirmed |
+| R10 | Combat style definition | A style has a name (from the culture's example names or custom), free-text weapons, and zero or one trait from the p. 90 list (p. 89 allows "one or more"; Brandon chose one). Base is STR+DEX | Confirmed |
 | R11 | Bonus points | One optional hobby skill (any professional skill or combat style). Bonus points go only to standard skills, professional skills and combat styles the character already has, plus the hobby skill. The age category's maximum applies to bonus points per skill, not to the running total | Confirmed |
 | R12 | Age and background events | Age category is chosen in the Concept step (default Adult) because it sets bonus points, the per-skill maximum and the number of background events. The age table's "Background Event Rolls" column is the total number of events (Young 0, Adult 1, Middle Aged 2, Senior 3, Old 4) | Confirmed |
 | R13 | Passions | The three cultural Passions use the culture's verbs (Loyalty, Love, Hate); the player names the object and its type. Starting values follow p. 24: romantic or familial = 30 + subject's POW+CHA; platonic or averse = 30 + character's POW + subject's CHA; organisation, place, concept = 30 + POW+INT; race, object = 30 + POW×2. The subject's characteristics are entered by the user and default to the character's own values. Passions receive no skill points in v1 | Confirmed |
@@ -103,6 +103,8 @@ Interpretations used where the rules are ambiguous or silent. Status is **Propos
 | R18 | Enemies or Rivals | Where a Reputation or Connections result gives a count of "X or Y" (for example 1d3 Enemies or Rivals), the count is rolled or entered and the player labels each one. Quick-generate labels them at random | Confirmed |
 | R19 | Quick-generate names | The core rules have no name tables; a generated character's name is left blank | Confirmed |
 | R20 | Background event effects | Background events are narrative only: the event is recorded on the sheet and changes no numbers. The player may add any Passion it suggests by hand | Confirmed |
+| R21 | Children | Only a married character has children (p. 24): 1d4-1 of them. Each child's age is 1d4 years for a Young or Adult parent; for a Middle Aged or older parent it uses the Age table dice of the next-younger category. Count and ages are rolled or entered | Confirmed |
+| R22 | Difficulty grade rounding | The fraction a grade adds or removes is rounded up first (R1), then applied: Hard = skill − ceil(skill/3), Formidable = skill − ceil(skill/2), Easy = skill + ceil(skill/2), Very Easy = skill × 2, Herculean = ceil(skill/10). For example, 50 at Hard is 33 | Confirmed |
 
 ## Known Errata
 
@@ -115,6 +117,7 @@ Interpretations used where the rules are ambiguous or silent. Status is **Propos
 The rules are copyright The Design Mechanism. The app needs their tables and numbers, but:
 
 - Never copy the book's prose into the app. Help text is short, in our own words, with a page reference ("see Mythras p. 14")
+- Tables whose entries are prose (background events, combat style trait descriptions, social class background resources) are stored as one short paraphrase per entry in our own words, with the page reference
 - Keep the repository private unless Brandon has checked the licensing
 - Never commit the PDFs or `core-rules_clean.txt` (they live outside this folder; keep it that way)
 

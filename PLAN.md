@@ -44,21 +44,21 @@ Transcribe every table v1 needs into typed modules in `src/data/`. This is the f
 
 Method for each table: find it in `../core-rules_clean.txt` by its page marker, render that page from `../core-rules.pdf` to read the real table, transcribe it, add a page citation comment, and record it in `docs/rules-data.md`.
 
-- [ ] Define the data types first (`src/data/types.ts`): Characteristic, Skill (standard, professional, magic; base formula; whether it takes a specialisation), Culture, Career, d100 table rows, and so on
-- [ ] Characteristics: generation methods, dice per characteristic, points build limits (p. 9)
-- [ ] Attribute tables: Action Points, Damage Modifier, Experience Modifier, Healing Rate, Luck Points, hit points per location, height and weight by SIZ and frame (pp. 9–12)
-- [ ] Skills: all standard skills with base formulas (p. 12); all professional and magic skills with base formulas (pp. 45–50)
-- [ ] Cultures: the four cultures with standard skills, choice groups, professional options, example combat style names, Passions, starting money (pp. 15–18, 22)
-- [ ] Careers: all 24 careers with standard skills, combat style slots, professional options and fixed specialisations; career availability by culture (pp. 27–32)
-- [ ] Age table, including the age-in-years dice (p. 33)
-- [ ] Ageing: Age Bands with roll grades and the Ageing Effects table (p. 72); Difficulty Grades (p. 39)
-- [ ] Social class tables by culture with money modifiers (p. 25)
-- [ ] Background events table (pp. 18–21)
-- [ ] Family tables: parents, siblings, extended family, reputation, connections, marriage (pp. 23–26)
-- [ ] Passion object types and starting-value formulas (p. 24)
-- [ ] Combat style traits (p. 90) and the sample combat styles table with suggested weapons and traits (p. 13)
-- [ ] `docs/rules-data.md`: one row per table with its source page and verification status
-- [ ] Brandon spot-checks the data against his books and signs off
+- [x] Define the data types first (`src/data/types.ts`): Characteristic, Skill (standard, professional, magic; base formula; whether it takes a specialisation), Culture, Career, d100 table rows, and so on
+- [x] Characteristics: generation methods, dice per characteristic, points build limits (p. 9)
+- [x] Attribute tables: Action Points, Damage Modifier, Experience Modifier, Healing Rate, Luck Points, hit points per location, height and weight by SIZ and frame (pp. 9–12)
+- [x] Skills: all standard skills with base formulas (p. 12); all professional and magic skills with base formulas (pp. 45–50)
+- [x] Cultures: the four cultures with standard skills, choice groups, professional options, example combat style names, Passions, starting money (pp. 15–18, 22)
+- [x] Careers: all 24 careers with standard skills, combat style slots, professional options and fixed specialisations; career availability by culture (pp. 27–32)
+- [x] Age table, including the age-in-years dice (p. 33)
+- [x] Ageing: Age Bands with roll grades and the Ageing Effects table (p. 72); Difficulty Grades (p. 39)
+- [x] Social class tables by culture with money modifiers (p. 25)
+- [x] Background events table (pp. 18–21)
+- [x] Family tables: parents, siblings, extended family, reputation, connections, marriage and children (R21) (pp. 24–26)
+- [x] Passion object types and starting-value formulas (p. 24)
+- [x] Combat style traits (p. 90) and the sample combat styles table with suggested weapons and traits (p. 13)
+- [x] `docs/rules-data.md`: one row per table with its source page and verification status
+- [x] Brandon spot-checks the data against his books and signs off
 
 **Tests** (`src/data/*.test.ts`):
 - 22 standard skills, 4 cultures, 24 careers
