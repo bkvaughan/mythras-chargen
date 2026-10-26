@@ -4,8 +4,8 @@ Work through the parts in order. Tick each checkbox when it is done. Each part e
 
 ## Status
 
-- Parts 1-8: complete, approved and committed (one commit per part on `main`)
-- Part 9 (Character sheet, print and export): in progress
+- Parts 1-9: complete, approved and committed (one commit per part on `main`)
+- Part 10 (Quick-generate): in progress
 
 ---
 
@@ -161,9 +161,9 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 9: Character sheet, print and export
 
-- [ ] Character sheet view modelled on `../character-sheet-print.pdf`: identity, characteristics and attributes, hit locations, standard and professional skills, combat styles, Passions, background and family notes, money
-- [ ] Print stylesheet: the sheet prints cleanly on US Letter and A4, and "Save as PDF" from the browser works
-- [ ] Export, import and "new character" controls in the UI
+- [x] Character sheet view modelled on `../character-sheet-print.pdf`: identity, characteristics and attributes, hit locations, standard and professional skills, combat styles, Passions, background and family notes, money
+- [x] Print stylesheet: the sheet prints cleanly on US Letter and A4, and "Save as PDF" from the browser works
+- [x] Export, import and "new character" controls in the UI
 
 **Tests:** Playwright test that completes a character, opens the sheet, and checks the key values; export and re-import through the UI gives the same sheet.
 

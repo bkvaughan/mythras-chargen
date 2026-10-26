@@ -84,3 +84,37 @@ export async function anathaymBackground(page: Page) {
   await page.getByRole('group', { name: 'Starting Money' }).getByLabel('4d6').fill('9')
   await page.getByRole('button', { name: 'Roll all events' }).click()
 }
+
+// Anathaym's Warrior career, p. 27.
+const CAREER_POINTS = {
+  Athletics: 10,
+  Endurance: 10,
+  Evade: 10,
+  Unarmed: 10,
+  'Lore (Military History)': 10,
+  'Lore (Strategy and Tactics)': 10,
+  Survival: 10,
+  'Combat Style (Meerish Slinger)': 15,
+  'Combat Style (Meerish Infantry)': 15,
+}
+
+export async function anathaymCareer(page: Page) {
+  await page.getByRole('button', { name: 'Next: Career' }).click()
+  await page.getByLabel('Career', { exact: true }).selectOption('warrior')
+  await page.getByLabel('Professional skill 1').selectOption('Lore (Military History)')
+  await page.getByLabel('Professional skill 2').selectOption('Lore (Strategy and Tactics)')
+  await page.getByLabel('Professional skill 3').selectOption('Survival')
+  const speciality = page.getByRole('group', { name: 'Speciality Style' })
+  await speciality.getByLabel('Combat Style name').selectOption('Custom name')
+  await speciality.getByLabel('Custom name').fill('Meerish Infantry')
+  await speciality.getByLabel('Weapons').fill('Spear, hoplite shield, javelin')
+  await speciality.getByLabel('Trait').selectOption('Formation Fighting')
+  for (const [skill, points] of Object.entries(CAREER_POINTS)) await page.getByLabel(`${skill} points`).fill(String(points))
+}
+
+/** 150 Adult bonus points, 15 on each of ten skills. */
+export async function anathaymBonus(page: Page) {
+  await page.getByRole('button', { name: 'Next: Bonus Skills' }).click()
+  const skills = ['Athletics', 'Brawn', 'Endurance', 'Evade', 'Perception', 'Stealth', 'Willpower', 'Insight', 'Influence', 'Locale']
+  for (const skill of skills) await page.getByLabel(`${skill} points`).fill('15')
+}

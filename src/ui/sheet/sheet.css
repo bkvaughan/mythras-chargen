@@ -1,0 +1,210 @@
+/* Character sheet: ink on white, sized in millimetres so each page fits US Letter and A4. */
+.sheet {
+  --sheet-ink: #1f1b18;
+  --sheet-rule: #8a817a;
+  --sheet-bar: #4a4440;
+  color: var(--sheet-ink);
+  font-size: 8.5pt;
+  line-height: 1.25;
+  /* Keep the shaded characteristic bars when printing */
+  print-color-adjust: exact;
+}
+
+.sheet-page {
+  background: #fff;
+  width: 100%;
+  max-width: 190mm;
+  margin: 0 auto 1.5rem;
+  padding: 4mm;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3mm;
+  align-items: start;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.15);
+}
+
+.sheet-page.page-two {
+  grid-template-columns: 1fr;
+}
+
+.sheet-main,
+.sheet-side {
+  display: grid;
+  gap: 3mm;
+}
+
+.sheet-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+  align-items: start;
+}
+
+.sheet-columns > div {
+  display: grid;
+  gap: 3mm;
+}
+
+.sheet-columns.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* A box titled on its top border, like the official sheet */
+.sheet-box {
+  border: 1px solid var(--sheet-rule);
+  border-radius: 3mm;
+  padding: 3mm 2.5mm 2mm;
+  position: relative;
+  break-inside: avoid;
+}
+
+.sheet-title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  margin: 0;
+  padding: 0 1.5mm;
+  background: #fff;
+  color: var(--sheet-ink);
+  font-size: 9.5pt;
+  white-space: nowrap;
+}
+
+.sheet-name {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-variant: small-caps;
+  font-size: 26pt;
+  text-align: center;
+  color: var(--sheet-ink);
+}
+
+.sheet-big {
+  margin: 0;
+  font-size: 14pt;
+  text-align: center;
+}
+
+.write-in {
+  min-height: 14mm;
+}
+
+.write-in.tall {
+  min-height: 60mm;
+}
+
+.identity {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1mm 3mm;
+}
+
+.sheet-field {
+  border-bottom: 1px solid var(--sheet-rule);
+  min-height: 4.5mm;
+}
+
+.sheet-field.wide {
+  grid-column: 1 / -1;
+}
+
+.sheet-label {
+  font-family: var(--heading-font);
+  font-variant: small-caps;
+  font-weight: 600;
+  margin: 1mm 0 0;
+}
+
+.notes ul {
+  margin: 0;
+  padding-left: 4mm;
+  min-height: 22mm;
+}
+
+.sheet-stats {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1mm 2mm;
+  margin: 0;
+}
+
+.sheet-stats div {
+  display: contents;
+}
+
+.sheet-stats dt {
+  background: var(--sheet-bar);
+  color: #fff;
+  font-family: var(--heading-font);
+  font-variant: small-caps;
+  font-weight: 600;
+  padding: 0.5mm 2mm;
+  border-radius: 2mm 0 0 2mm;
+}
+
+.sheet-stats.attributes dt {
+  background: #c9c3bd;
+  color: var(--sheet-ink);
+}
+
+.sheet-stats dd {
+  margin: 0;
+  min-width: 10mm;
+  text-align: center;
+  border: 1px solid var(--sheet-rule);
+  border-radius: 2mm;
+  font-weight: 600;
+}
+
+.characteristics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+}
+
+.sheet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sheet-table th {
+  text-align: left;
+  font-family: var(--heading-font);
+  font-variant: small-caps;
+  font-weight: 600;
+  border-bottom: 1px solid var(--sheet-rule);
+}
+
+.sheet-table td {
+  border-bottom: 1px solid #d8d2cb;
+  height: 4.2mm;
+  padding: 0 1mm 0 0;
+}
+
+.sheet-table .formula {
+  font-size: 7pt;
+  color: #4d4641;
+}
+
+.sheet-table .num {
+  text-align: right;
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  /* The top padding leaves room for the first row of box titles, which sit above their boxes */
+  .sheet-page {
+    box-shadow: none;
+    padding: 2mm 0 0;
+    margin: 0;
+    max-width: none;
+  }
+
+  .sheet-page + .sheet-page {
+    break-before: page;
+  }
+}

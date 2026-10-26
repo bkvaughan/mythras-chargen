@@ -63,10 +63,57 @@ h4 {
   background: var(--header-bar);
   color: var(--surface);
   padding: 0.75rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .app-header h1 {
   margin: 0;
+}
+
+.file-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.button.light {
+  background: transparent;
+  color: var(--surface);
+  border-color: var(--surface);
+}
+
+.import-error {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: #fbefe9;
+  color: var(--error);
+  border-radius: var(--radius);
+  white-space: pre-line;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+label.button {
+  font-weight: normal;
+  font-size: inherit;
+}
+
+/* The label wrapping the hidden file input shows the focus ring instead */
+label.button:focus-within {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
 }
 
 .layout {
@@ -368,4 +415,51 @@ select {
 .remaining {
   font-weight: 600;
   color: var(--accent);
+}
+
+/* Character sheet view: no summary panel, room for the sheet */
+.layout.sheet-view {
+  grid-template-columns: 15rem minmax(0, 1fr);
+}
+
+@media (max-width: 64rem) {
+  .layout.sheet-view {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+}
+
+.sheet-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Printing shows the character sheet alone */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .app-header,
+  .step-nav,
+  .sheet-toolbar,
+  .step-footer {
+    display: none;
+  }
+
+  .layout,
+  .layout.sheet-view {
+    display: block;
+    padding: 0;
+    max-width: none;
+  }
+
+  .layout > main.panel {
+    border: 0;
+    padding: 0;
+    background: none;
+  }
 }

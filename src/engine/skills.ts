@@ -41,6 +41,8 @@ export function heldCombatStyles(choices: SkillChoices): CombatStyle[] {
 
 export interface SkillRow {
   key: string
+  /** The skill it is an instance of, e.g. 'Lore' for 'Lore (Geography)'; 'Combat Style' for styles. */
+  skill: string
   kind: 'standard' | 'professional' | 'combatStyle'
   base: number
   /** Culture points, plus the +40 for Customs and Native Tongue once a culture is chosen. */
@@ -52,17 +54,17 @@ export interface SkillRow {
 
 /** Every skill the character has, with base, points per stage and total. */
 export function skillTable(c: Characteristics, choices: SkillChoices): SkillRow[] {
-  const row = (key: string, kind: SkillRow['kind'], base: number): SkillRow => {
+  const row = (key: string, skill: string, kind: SkillRow['kind'], base: number): SkillRow => {
     const cultureBonus = choices.culture && CULTURE_SKILL_BONUS.skills.includes(key) ? CULTURE_SKILL_BONUS.bonus : 0
     const culture = cultureBonus + (choices.culture?.points[key] ?? 0)
     const career = choices.career?.points[key] ?? 0
     const bonus = choices.bonus?.points[key] ?? 0
-    return { key, kind, base, culture, career, bonus, total: base + culture + career + bonus }
+    return { key, skill, kind, base, culture, career, bonus, total: base + culture + career + bonus }
   }
   return [
-    ...STANDARD_SKILLS.map((s) => row(s.name, 'standard', baseValue(s.base, c))),
-    ...heldProfessionalSkills(choices).map((p) => row(skillKey(p), 'professional', baseValue(findSkill(p.skill)!.base, c))),
-    ...heldCombatStyles(choices).map((s) => row(styleKey(s), 'combatStyle', baseValue(COMBAT_STYLE_BASE, c))),
+    ...STANDARD_SKILLS.map((s) => row(s.name, s.name, 'standard', baseValue(s.base, c))),
+    ...heldProfessionalSkills(choices).map((p) => row(skillKey(p), p.skill, 'professional', baseValue(findSkill(p.skill)!.base, c))),
+    ...heldCombatStyles(choices).map((s) => row(styleKey(s), 'Combat Style', 'combatStyle', baseValue(COMBAT_STYLE_BASE, c))),
   ]
 }
 
