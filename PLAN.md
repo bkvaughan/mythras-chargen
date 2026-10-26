@@ -75,18 +75,18 @@ Method for each table: find it in `../core-rules_clean.txt` by its page marker, 
 
 Pure functions in `src/engine/` that implement every creation rule, fully unit tested. No UI yet.
 
-- [ ] Dice: seeded RNG for tests, a parser and roller for expressions used by the tables (`3d6`, `2d6+6`, `1d3-1`, `4d6`), d100 table lookup
-- [ ] Characteristics: roll in order, roll and assign (with swap validation per R2), points build validation (R3)
-- [ ] Attributes: all derived attributes, hit points per location, height and weight ranges (R1 for rounding)
-- [ ] Skill bases from characteristics, including specialised skills (R7)
-- [ ] Culture step: available skills and choice groups (R6), allocation validation (R4, R5), +40 Customs and Native Tongue
-- [ ] Career step: career availability by culture, professional picks (R8), combat style slots (R9), allocation validation (0–15, R5)
-- [ ] Bonus step: points and per-skill maximum by age category, hobby skill, eligibility (R11, R12)
-- [ ] Age in years (R16) and Ageing (R17): bands passed, Endurance and Willpower rolls at each grade, characteristic losses as modifiers, invalid if a characteristic reaches 0
-- [ ] Passions: starting values (R13)
-- [ ] Background: social class, starting money (R14), background events (count per R12), family, reputation, connections, marriage
-- [ ] Final skill totals: base + culture + career + bonus (+40 where it applies)
-- [ ] Step validity: for each step, whether it is complete and, if not, the list of problems in plain words (the UI shows these)
+- [x] Dice: seeded RNG for tests, a parser and roller for expressions used by the tables (`3d6`, `2d6+6`, `1d3-1`, `4d6`), d100 table lookup
+- [x] Characteristics: roll in order, roll and assign (with swap validation per R2), points build validation (R3)
+- [x] Attributes: all derived attributes, hit points per location, height and weight ranges (R1 for rounding)
+- [x] Skill bases from characteristics, including specialised skills (R7)
+- [x] Culture step: available skills and choice groups (R6), allocation validation (R4, R5), +40 Customs and Native Tongue
+- [x] Career step: career availability by culture, professional picks (R8), combat style slots (R9), allocation validation (0–15, R5)
+- [x] Bonus step: points and per-skill maximum by age category, hobby skill, eligibility (R11, R12)
+- [x] Age in years (R16) and Ageing (R17): bands passed, Endurance and Willpower rolls at each grade, characteristic losses as modifiers, invalid if a characteristic reaches 0
+- [x] Passions: starting values (R13)
+- [x] Background: social class, starting money (R14), background events (count per R12), family, reputation, connections, marriage
+- [x] Final skill totals: base + culture + career + bonus (+40 where it applies)
+- [x] Step validity: for each step, whether it is complete and, if not, the list of problems in plain words (the UI shows these). One problems function per step; Part 5 combines them for the whole character
 
 **Tests:**
 - Every table bracket boundary for every attribute (for example Damage Modifier at STR+SIZ 20, 21, 25, 26)
