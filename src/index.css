@@ -30,7 +30,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: var(--heading-font);
   font-variant: small-caps;
   font-weight: 600;
@@ -47,7 +48,8 @@ h2 {
   color: var(--accent);
 }
 
-h3 {
+h3,
+h4 {
   font-size: 1.15rem;
 }
 
@@ -78,7 +80,7 @@ h3 {
 
 @media (max-width: 64rem) {
   .layout {
-    grid-template-columns: 13rem minmax(0, 1fr);
+    grid-template-columns: 14rem minmax(0, 1fr);
   }
   .summary {
     grid-column: 1 / -1;
@@ -93,6 +95,10 @@ h3 {
 }
 
 /* Step list */
+.step-nav {
+  padding-inline: 0.5rem;
+}
+
 .step-list {
   list-style: none;
   margin: 0;
@@ -123,6 +129,10 @@ h3 {
 .step-list button:disabled {
   color: var(--ink-muted);
   cursor: not-allowed;
+}
+
+.step-label {
+  white-space: nowrap;
 }
 
 .step-mark {
@@ -160,6 +170,8 @@ legend {
 }
 
 fieldset {
+  /* Without this a fieldset grows to fit its widest select option */
+  min-width: 0;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
   margin: 0 0 1rem;
@@ -252,6 +264,39 @@ button {
 
 .table tbody tr:nth-child(even) {
   background: #f1ebdf;
+}
+
+/* Inputs inside tables stay compact so tables fit a tablet */
+select {
+  max-width: 100%;
+}
+
+.table select,
+.table input[type='text'] {
+  width: 100%;
+  min-width: 7rem;
+}
+
+.table input[type='number'] {
+  width: 4.5rem;
+}
+
+.table .inline {
+  flex-wrap: nowrap;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.row-gap {
+  margin-bottom: 0.5rem;
+}
+
+.picks {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .spaced {

@@ -4,7 +4,7 @@ import { CULTURE_ALLOCATION } from '../data/cultures.ts'
 import type { SocialClass } from '../data/socialClass.ts'
 import { ageingBands, resolveAgeing, type AgeingResult } from '../engine/ageing.ts'
 import { deriveAttributes, type Attributes } from '../engine/attributes.ts'
-import { backgroundProblems, socialClass, startingMoney } from '../engine/background.ts'
+import { backgroundProblems, familyProblems, socialClass, startingMoney } from '../engine/background.ts'
 import { ageCategory, bonusProblems } from '../engine/bonus.ts'
 import { careerProblems } from '../engine/career.ts'
 import { assignmentProblems, pointsBuildProblems, rolledProblems, withModifiers } from '../engine/characteristics.ts'
@@ -95,7 +95,10 @@ export function deriveCharacter(c: Character): DerivedCharacter {
       culture: status(cultureProblems(c.culture)),
       background: status(
         culture
-          ? backgroundProblems({ culture, ageCategory: c.concept.ageCategory, socialClassRoll, moneyRoll, events: c.background.events })
+          ? [
+              ...backgroundProblems({ culture, ageCategory: c.concept.ageCategory, socialClassRoll, moneyRoll, events: c.background.events }),
+              ...familyProblems(c.background, c.concept.ageCategory, c.background.children),
+            ]
           : ['Choose a culture first'],
       ),
       career: status(careerProblems(c.culture, c.career)),

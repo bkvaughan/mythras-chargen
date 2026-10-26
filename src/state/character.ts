@@ -24,6 +24,7 @@ const ageCategory = z.enum(AGE_CATEGORIES.map((a) => a.category) as [AgeCategory
 const passionObject = z.enum(keys(PASSION_OBJECTS) as [PassionObject, ...PassionObject[]])
 
 const allocation = z.record(z.string(), z.int())
+const d100 = z.int().min(1).max(100)
 const skillPick = z.object({ skill: z.string(), specialisation: z.string().optional() })
 const combatStyle = z.object({ name: z.string(), weapons: z.string(), trait: z.string().nullable() })
 const passion = z.object({
@@ -70,22 +71,22 @@ export const characterSchema = z.object({
     })
     .nullable(),
   background: z.object({
-    socialClassRoll: z.int().nullable(),
+    socialClassRoll: d100.nullable(),
     moneyRoll: z.int().nullable(),
     /** d100 results; choosing an event stores the first number of its row. */
-    events: z.array(z.int()),
-    parentsRoll: z.int().nullable(),
-    siblingsRoll: z.int().nullable(),
+    events: z.array(d100),
+    parentsRoll: d100.nullable(),
+    siblingsRoll: d100.nullable(),
     siblings: z.int().nullable(),
-    extendedFamilyRoll: z.int().nullable(),
+    extendedFamilyRoll: d100.nullable(),
     grandparents: z.int().nullable(),
     auntsAndUncles: z.int().nullable(),
     cousins: z.int().nullable(),
-    reputationRoll: z.int().nullable(),
-    connectionsRoll: z.int().nullable(),
+    reputationRoll: d100.nullable(),
+    connectionsRoll: d100.nullable(),
     /** Allies, Contacts, Enemies and Rivals from reputation and connections, labelled and named by the player (R18). */
     people: z.array(z.object({ kind: z.enum(['Ally', 'Contact', 'Enemy', 'Rival']), name: z.string() })),
-    marriageRoll: z.int().nullable(),
+    marriageRoll: d100.nullable(),
     /** Ages of the children of a married character (R21). */
     children: z.array(z.int()),
     /** Passions added by hand beyond the three cultural ones (R20). */

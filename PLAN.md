@@ -4,8 +4,8 @@ Work through the parts in order. Tick each checkbox when it is done. Each part e
 
 ## Status
 
-- Parts 1-6: complete, approved and committed (one commit per part on `main`)
-- Part 7 (Culture and Background): in progress
+- Parts 1-7: complete, approved and committed (one commit per part on `main`)
+- Part 8 (Career, Bonus Skills and Ageing): in progress
 
 ---
 
@@ -137,8 +137,8 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 7: Culture and Background steps
 
-- [ ] Culture step: choose culture; resolve choice groups; pick three professional skills with specialisations; optional combat style (name, weapons, trait); allocate 100 points with live validation; name the Native Tongue; set up the three Passions with object and type
-- [ ] Background step: social class (roll or choose), starting money, background events (roll, reroll or choose, count from age category), family, reputation and connections with named Allies, Contacts, Rivals and Enemies (free text), marriage (optional)
+- [x] Culture step: choose culture; resolve choice groups; pick three professional skills with specialisations; optional combat style (name, weapons, trait); allocate 100 points with live validation; name the Native Tongue; set up the three Passions with object and type
+- [x] Background step: social class (roll or choose), starting money, background events (roll, reroll or choose, count from age category), family, reputation and connections with named Allies, Contacts, Rivals and Enemies (free text), marriage (optional)
 
 **Tests:** component tests for allocation rules; Playwright test that recreates Anathaym's culture step and checks her post-culture skills on screen.
 

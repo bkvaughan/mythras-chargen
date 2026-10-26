@@ -79,7 +79,7 @@ The source documents are in the parent folder (`..`), outside this project. They
 
 ## Rules Readings
 
-Interpretations used where the rules are ambiguous or silent. Status is **Proposed** until Brandon confirms it in Part 1 of PLAN.md; after that it is **Confirmed**. Never change a Confirmed reading without asking Brandon. When a new ambiguity comes up, stop and ask, then add it here.
+Interpretations used where the rules are ambiguous or silent. Stay by the book: the app will be shown to the Mythras community, so where the rules are clear, follow them even when a result looks odd, and do not add house rules. Status is **Proposed** until Brandon confirms it in Part 1 of PLAN.md; after that it is **Confirmed**. Never change a Confirmed reading without asking Brandon. When a new ambiguity comes up, stop and ask, then add it here.
 
 | # | Topic | Reading | Status |
 |---|---|---|---|

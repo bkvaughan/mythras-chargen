@@ -3,8 +3,10 @@ import type { StepId } from '../state/derive.ts'
 import { useCharacter } from '../state/useCharacter.ts'
 import { Problems } from './shared/Problems.tsx'
 import { AttributesStep } from './steps/AttributesStep.tsx'
+import { BackgroundStep } from './steps/BackgroundStep.tsx'
 import { CharacteristicsStep } from './steps/CharacteristicsStep.tsx'
 import { ConceptStep } from './steps/ConceptStep.tsx'
+import { CultureStep } from './steps/CultureStep.tsx'
 import type { StepProps } from './steps/types.ts'
 import { SummaryPanel } from './SummaryPanel.tsx'
 import { isReachable, STEP_LABELS, visibleSteps } from './wizard.ts'
@@ -13,6 +15,8 @@ const STEP_COMPONENTS: Partial<Record<StepId, ComponentType<StepProps>>> = {
   concept: ConceptStep,
   characteristics: CharacteristicsStep,
   attributes: AttributesStep,
+  culture: CultureStep,
+  background: BackgroundStep,
 }
 
 export default function App() {
@@ -31,7 +35,7 @@ export default function App() {
         <h1>Mythras Character Generator</h1>
       </header>
       <div className="layout">
-        <nav className="panel" aria-label="Creation steps">
+        <nav className="panel step-nav" aria-label="Creation steps">
           <ol className="step-list">
             {steps.map((s, i) => (
               <li key={s}>
@@ -41,7 +45,7 @@ export default function App() {
                   disabled={!isReachable(s, derived)}
                   onClick={() => setCurrent(s)}
                 >
-                  <span>
+                  <span className="step-label">
                     {i + 1}. {STEP_LABELS[s]}
                   </span>
                   <span className={`step-mark${derived.steps[s].complete ? ' done' : ''}`}>

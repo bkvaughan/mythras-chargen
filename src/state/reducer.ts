@@ -1,5 +1,5 @@
 import { CAREERS } from '../data/careers.ts'
-import { CULTURES } from '../data/cultures.ts'
+import { CULTURE_ALLOCATION, CULTURES } from '../data/cultures.ts'
 import type { CareerId, CultureId } from '../data/types.ts'
 import { maritalStatus } from '../engine/background.ts'
 import { ageCategory, bonusEligibleSkills } from '../engine/bonus.ts'
@@ -36,7 +36,8 @@ export function skillChoices(c: Character): SkillChoices {
 }
 
 export function reducer(state: Character, action: Action): Character {
-  return prune(state, apply(state, action))
+  const next = apply(state, action)
+  return next === state ? state : settle(next)
 }
 
 function apply(state: Character, action: Action): Character {
@@ -80,8 +81,17 @@ function apply(state: Character, action: Action): Character {
     }
     case 'setCulturePoints':
       return state.culture ? { ...state, culture: { ...state.culture, points: setPoints(state.culture.points, action) } } : state
-    case 'setBackground':
-      return { ...state, background: { ...state.background, ...action.changes } }
+    case 'setBackground': {
+      const background = { ...state.background, ...action.changes }
+      // A new family roll asks for new counts, unless they come with it.
+      const changed = (key: keyof Character['background']) =>
+        key in action.changes && action.changes[key] !== state.background[key]
+      if (changed('siblingsRoll') && !('siblings' in action.changes)) background.siblings = null
+      if (changed('extendedFamilyRoll') && !('grandparents' in action.changes)) {
+        Object.assign(background, { grandparents: null, auntsAndUncles: null, cousins: null })
+      }
+      return { ...state, background }
+    }
     case 'chooseCareer': {
       if (state.career?.career === action.career) return state
       const hasCulturalStyle = Boolean(state.culture?.combatStyle)
@@ -171,15 +181,23 @@ function rekey(before: Character, after: Character): Character {
 const keep = (points: Allocation, eligible: string[]): Allocation =>
   Object.fromEntries(Object.entries(points).filter(([key]) => eligible.includes(key)))
 
-/** Clears later choices an earlier change has made meaningless; keeps everything else. */
-function prune(before: Character, c: Character): Character {
-  if (c === before) return c
+/**
+ * Clears later choices an earlier change has made meaningless and fills defaults; keeps
+ * everything else. Also run on a character loaded from storage, which no action has touched.
+ */
+export function settle(c: Character): Character {
   let next = { ...c }
 
   if (next.career && (!next.culture || !availableCareers(next.culture.culture).includes(next.career.career))) {
     next.career = null
   }
-  if (next.culture) next.culture = { ...next.culture, points: keep(next.culture.points, cultureEligibleSkills(next.culture)) }
+  if (next.culture) {
+    const eligible = cultureEligibleSkills(next.culture)
+    // Every culture skill needs the minimum (R4), so a skill joining the allocation starts there.
+    const points = keep(next.culture.points, eligible)
+    for (const key of eligible) points[key] ??= CULTURE_ALLOCATION.min
+    next.culture = { ...next.culture, points }
+  }
   if (next.career && next.culture) {
     next.career = { ...next.career, points: keep(next.career.points, careerEligibleSkills(next.culture, next.career)) }
   }

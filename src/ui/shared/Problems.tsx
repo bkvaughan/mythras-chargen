@@ -13,8 +13,8 @@ export function Problems({ status }: { status: StepStatus }) {
     <div className="problems" role="status">
       <strong>To complete this step:</strong>
       <ul>
-        {status.problems.map((p) => (
-          <li key={p}>{p}</li>
+        {status.problems.map((p, i) => (
+          <li key={i}>{p}</li>
         ))}
       </ul>
     </div>

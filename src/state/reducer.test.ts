@@ -59,13 +59,21 @@ describe('building a character through actions', () => {
 })
 
 describe('actions', () => {
+  test('culture skills start at the minimum (R4) and cannot drop below an entry', () => {
+    const c = run([{ type: 'chooseCulture', culture: 'civilised' }])
+    expect(c.culture?.points).toEqual({ Conceal: 5, Deceit: 5, Drive: 5, Influence: 5, Insight: 5, Locale: 5, Willpower: 5 })
+    const picked = run([{ type: 'updateCulture', changes: { professional: [{ skill: 'Courtesy' }] } }], c)
+    expect(picked.culture?.points.Courtesy).toBe(5)
+    expect(run([{ type: 'setCulturePoints', key: 'Conceal', points: 0 }], c).culture?.points.Conceal).toBe(5)
+    expect(run([{ type: 'setCulturePoints', key: 'Conceal', points: 3 }], c).culture?.points.Conceal).toBe(3)
+  })
+
   test('setting points to 0 removes the entry', () => {
     const c = run([
-      { type: 'chooseCulture', culture: 'civilised' },
-      { type: 'setCulturePoints', key: 'Conceal', points: 5 },
-      { type: 'setCulturePoints', key: 'Conceal', points: 0 },
-    ])
-    expect(c.culture?.points).toEqual({})
+      { type: 'chooseCareer', career: 'warrior' },
+      { type: 'setCareerPoints', key: 'Athletics', points: 0 },
+    ], run(anathaymActions))
+    expect(c.career?.points.Athletics).toBeUndefined()
   })
 
   test('choosing a culture prefills its Passion verbs', () => {
@@ -95,7 +103,7 @@ describe('invalidation', () => {
 
   test('changing culture resets culture choices but keeps characteristics and an allowed career', () => {
     const c = run([{ type: 'chooseCulture', culture: 'barbarian' }], anathaym)
-    expect(c.culture?.points).toEqual({})
+    expect(c.culture?.points).toEqual({ Athletics: 5, Brawn: 5, Endurance: 5, 'First Aid': 5, Locale: 5, Perception: 5 })
     expect(c.characteristics).toEqual(anathaym.characteristics)
     expect(c.career?.career).toBe('warrior')
     // Career points stay on Warrior skills; the Meerish Slinger style left with the old culture.
@@ -164,6 +172,16 @@ describe('invalidation', () => {
     const married = run([{ type: 'setBackground', changes: { marriageRoll: 2, children: [3] } }], anathaym)
     expect(married.background.children).toEqual([3])
     expect(run([{ type: 'setBackground', changes: { marriageRoll: 3 } }], married).background.children).toEqual([])
+  })
+
+  test('a new family roll clears its counts unless they come with it', () => {
+    const family = run([{ type: 'setBackground', changes: { siblingsRoll: 50, siblings: 4, extendedFamilyRoll: 50, cousins: 2 } }])
+    expect(family.background.siblings).toBe(4)
+    const rerolled = run([{ type: 'setBackground', changes: { siblingsRoll: 95, extendedFamilyRoll: 95 } }], family)
+    expect(rerolled.background.siblings).toBeNull()
+    expect(rerolled.background.cousins).toBeNull()
+    expect(run([{ type: 'setBackground', changes: { siblingsRoll: 95, siblings: 9 } }], family).background.siblings).toBe(9)
+    expect(run([{ type: 'setBackground', changes: { siblingsRoll: 50 } }], family).background.siblings).toBe(4)
   })
 })
 

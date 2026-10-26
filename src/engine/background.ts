@@ -1,11 +1,11 @@
 import { AGE_CATEGORIES, type AgeCategory } from '../data/age.ts'
 import { BACKGROUND_EVENTS } from '../data/backgroundEvents.ts'
 import { CULTURES } from '../data/cultures.ts'
-import { CONNECTION_KIND, MARRIAGE, type ConnectionKind } from '../data/family.ts'
+import { CONNECTION_KIND, CONNECTIONS, EXTENDED_FAMILY, MARRIAGE, REPUTATION, SIBLINGS, type ConnectionKind } from '../data/family.ts'
 import { SOCIAL_CLASSES, type SocialClass } from '../data/socialClass.ts'
 import type { CultureId, Dice } from '../data/types.ts'
 import { ageCategory } from './bonus.ts'
-import { diceRange, lookupRow, rollD100, type Rng } from './dice.ts'
+import { diceRange, lookupRow, roll, rollD100, type Rng } from './dice.ts'
 import { baseValue, findSkill } from './skills.ts'
 import type { Characteristics } from './types.ts'
 
@@ -24,13 +24,18 @@ export function backgroundEvent(d100: number) {
   return BACKGROUND_EVENTS.find((r) => d100 >= r.min && d100 <= r.max)!
 }
 
-/** Rolls the age category's number of events, re-rolling any repeat (p. 18, R12). */
+/** Rolls one event, re-rolling any repeat of the events already held (p. 18). */
+export function rollBackgroundEvent(held: number[], rng: Rng): number {
+  for (;;) {
+    const d100 = rollD100(rng)
+    if (!held.some((r) => backgroundEvent(r) === backgroundEvent(d100))) return d100
+  }
+}
+
+/** Rolls the age category's number of events, without repeats (p. 18, R12). */
 export function rollBackgroundEvents(category: AgeCategory, rng: Rng): number[] {
   const rolls: number[] = []
-  while (rolls.length < ageCategory(category).backgroundEvents) {
-    const d100 = rollD100(rng)
-    if (!rolls.some((r) => backgroundEvent(r) === backgroundEvent(d100))) rolls.push(d100)
-  }
+  while (rolls.length < ageCategory(category).backgroundEvents) rolls.push(rollBackgroundEvent(rolls, rng))
   return rolls
 }
 
@@ -61,6 +66,22 @@ export function connectionKind(d4: number): ConnectionKind {
   return CONNECTION_KIND.find((k) => k.roll === d4)!.kind
 }
 
+/**
+ * The Allies, Contacts, Enemies and Rivals that reputation and connections grant, p. 26.
+ * Reputation's "X or Y" label is picked at random; the player may relabel it (R18).
+ */
+export function rollPeople(reputationRoll: number | null, connectionsRoll: number | null, rng: Rng): ConnectionKind[] {
+  const people: ConnectionKind[] = []
+  const reputation = reputationRoll === null ? null : lookupRow(REPUTATION, reputationRoll).connections
+  if (reputation) {
+    const count = roll(reputation.count, rng)
+    for (let i = 0; i < count; i++) people.push(reputation.kinds[roll('1d2', rng) - 1])
+  }
+  const rolls = connectionsRoll === null ? 0 : lookupRow(CONNECTIONS, connectionsRoll).rolls
+  for (let i = 0; i < rolls; i++) people.push(connectionKind(roll('1d4', rng)))
+  return people
+}
+
 export type MaritalStatus = 'married' | 'betrothed' | 'unmarried'
 
 /** p. 24: at or under a tenth of base Influence (rounded up, R1) is married; at or under base Influence, betrothed. */
@@ -75,4 +96,43 @@ export function maritalStatus(d100: number, c: Characteristics): MaritalStatus {
 export function childAgeDice(parent: AgeCategory): Dice {
   const i = AGE_CATEGORIES.findIndex((a) => a.category === parent)
   return i <= 1 ? MARRIAGE.childAge : AGE_CATEGORIES[i - 1].ageDice
+}
+
+/** Ages of a married character's children: 1d4-1 of them (R21). */
+export function rollChildren(parent: AgeCategory, rng: Rng): number[] {
+  return Array.from({ length: roll(MARRIAGE.children, rng) }, () => roll(childAgeDice(parent), rng))
+}
+
+export interface FamilyCounts {
+  siblingsRoll: number | null
+  siblings: number | null
+  extendedFamilyRoll: number | null
+  grandparents: number | null
+  auntsAndUncles: number | null
+  cousins: number | null
+}
+
+const EXTENDED_LABELS = { grandparents: 'Grandparents', auntsAndUncles: 'Aunts and uncles', cousins: 'Cousins' } as const
+
+/** Family is optional (R23), but a count that is entered must fit its table row's dice. */
+export function familyProblems(f: FamilyCounts, parent: AgeCategory, children: number[]): string[] {
+  const problems: string[] = []
+  const check = (label: string, value: number | null, dice: Dice | null) => {
+    if (value === null) return
+    const range = dice === null ? { min: 0, max: 0 } : diceRange(dice)
+    if (value < range.min || value > range.max) {
+      problems.push(dice === null ? `${label}: the family roll gives none` : `${label} must be ${range.min}-${range.max} on ${dice}`)
+    }
+  }
+  if (f.siblingsRoll !== null) check('Siblings', f.siblings, lookupRow(SIBLINGS, f.siblingsRoll))
+  if (f.extendedFamilyRoll !== null) {
+    const extended = lookupRow(EXTENDED_FAMILY, f.extendedFamilyRoll)
+    for (const key of Object.keys(EXTENDED_LABELS) as (keyof typeof EXTENDED_LABELS)[]) check(EXTENDED_LABELS[key], f[key], extended[key])
+  }
+
+  const count = diceRange(MARRIAGE.children)
+  if (children.length > count.max) problems.push(`At most ${count.max} children on ${MARRIAGE.children}`)
+  const age = diceRange(childAgeDice(parent))
+  if (children.some((a) => a < age.min || a > age.max)) problems.push(`Each child's age must be ${age.min}-${age.max} on ${childAgeDice(parent)}`)
+  return problems
 }
