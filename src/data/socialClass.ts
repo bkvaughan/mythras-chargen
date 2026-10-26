@@ -168,7 +168,7 @@ export const SOCIAL_CLASSES: Record<CultureId, D100Row<SocialClass>[]> = {
         name: 'Freeman',
         exampleTitles: ['Arad', 'Haran', 'Kinsmen', 'Subjects'],
         moneyModifier: 1,
-        resources: 'Own mounts, cart or small boat, a tent, a few livestock, weapons, light armour, a slave or two',
+        resources: 'Mounts and a cart or boat of their own, a tent, some livestock, weapons, light armour, perhaps a slave or two',
       },
     },
     {

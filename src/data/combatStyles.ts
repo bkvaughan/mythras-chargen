@@ -16,7 +16,7 @@ const trait = (name: string, summary: string, groupOnly = false): CombatStyleTra
 // Combat Style Traits, p. 90. A style has zero or one trait (R10).
 export const COMBAT_STYLE_TRAITS: CombatStyleTrait[] = [
   trait('Assassination', "Can use the 'Kill Silently' special effect"),
-  trait('Batter Aside', 'Weapon counts one size larger against parries when Damage Modifier is two or more steps higher'),
+  trait('Batter Aside', 'Against a foe whose Damage Modifier is at least two steps lower, the weapon counts one size larger when parried'),
   trait('Beast-back Lancer', 'No difficulty penalty to hit on a mounted charge'),
   trait('Blind Fighting', 'Ignores penalties for darkness or temporary blindness'),
   trait('Cautious Fighter', 'Change Range can withdraw from engagement without a roll'),

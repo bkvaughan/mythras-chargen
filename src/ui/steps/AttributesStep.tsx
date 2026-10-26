@@ -29,7 +29,7 @@ export function AttributesStep({ character, derived, dispatch }: StepProps) {
   return (
     <>
       <h2>Attributes</h2>
-      <p className="hint">Attributes follow from the characteristics; see Mythras pp. 8-10.</p>
+      <p className="hint">Attributes follow from the characteristics; see Mythras pp. 8-11.</p>
 
       <table className="table" aria-label="Attributes">
         <tbody>

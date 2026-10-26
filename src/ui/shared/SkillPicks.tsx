@@ -45,13 +45,13 @@ export function SkillPicks({ options, picks, count, onChange }: Props) {
                 ) : null,
               )}
             </select>
-            {pick && findSkill(pick.skill)?.specialised && (
+            {/* A specialisation fixed by the career is already in the option's name */}
+            {pick && findSkill(pick.skill)?.specialised && !ref?.specialisation && (
               <input
                 type="text"
                 aria-label={`Specialisation ${i + 1}`}
                 placeholder={ref?.hint ?? 'Specialisation'}
                 value={pick.specialisation ?? ''}
-                readOnly={Boolean(ref?.specialisation)}
                 onChange={(e) => specialise(i, e.target.value)}
               />
             )}

@@ -36,7 +36,7 @@ export const BACKGROUND_EVENTS: D100Row<string>[] = [
   e(47, 47, 'Woke to find a valuable religious or royal object in your bed'),
   e(48, 49, 'Survived a deadly childhood illness and have never been sick since'),
   e(50, 50, 'Nearly killed by a mysterious beast that you sense still stalks you'),
-  e(51, 52, 'Spent your childhood as a slave before escaping or being freed'),
+  e(51, 52, 'Grew up enslaved, until you escaped or were set free'),
   e(53, 54, 'An elder relative has promised to tell you a great secret one day'),
   e(55, 56, 'A ritual you saw as a child haunts you, and you must learn what it was'),
   e(57, 58, 'Your family is hunted by powerful enemies and always on the run'),

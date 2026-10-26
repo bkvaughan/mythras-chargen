@@ -32,7 +32,7 @@ A web-based character generator for the Mythras RPG (core rules, Revision 3, 201
 - Plain CSS with custom properties, plus a print stylesheet for the character sheet. No UI component library
 - zod for validating imported JSON characters
 - State: one `Character` object held in a React reducer, autosaved to localStorage, exported and imported as versioned JSON (`schemaVersion`)
-- Deployment target decided at the end of v1 (GitHub Pages is the likely choice)
+- Deployment: GitHub Pages at `bkvaughan/mythras-chargen`, built and published by `.github/workflows/deploy.yml` on every push to `main`. Vite `base` is `./` so the build works under the project-site path
 
 ### Architecture rules
 
@@ -121,7 +121,7 @@ The rules are copyright The Design Mechanism. The app needs their tables and num
 
 - Never copy the book's prose into the app. Help text is short, in our own words, with a page reference ("see Mythras p. 14"). Page references shown to the user are the book's printed page numbers (text marker − 1), since players look them up in the printed book; code comments keep the text markers
 - Tables whose entries are prose (background events, combat style trait descriptions, social class background resources) are stored as one short paraphrase per entry in our own words, with the page reference
-- Keep the repository private unless Brandon has checked the licensing
+- The repository and the GitHub Pages site are public by Brandon's choice (2026-10-25): the app is for his own use for now. If it is shared more widely (the Mythras Discord, The Design Mechanism), revisit licensing and make any changes needed
 - Never commit the PDFs or `core-rules_clean.txt` (they live outside this folder; keep it that way)
 
 ## Coding Standards

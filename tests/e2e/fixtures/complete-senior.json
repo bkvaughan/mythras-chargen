@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "concept": {
+    "name": "Anathaym",
+    "player": "Brandon",
+    "gender": "Female",
+    "handedness": "Right",
+    "description": "A Meerish warrior, daughter of a veteran of the god Myceras.",
+    "ageCategory": "senior",
+    "age": 55,
+    "method": "rollInOrder"
+  },
+  "characteristics": {
+    "rolled": {
+      "STR": 11,
+      "CON": 13,
+      "SIZ": 10,
+      "DEX": 16,
+      "INT": 14,
+      "POW": 7,
+      "CHA": 9
+    },
+    "values": {
+      "STR": 11,
+      "CON": 13,
+      "SIZ": 10,
+      "DEX": 16,
+      "INT": 14,
+      "POW": 7,
+      "CHA": 9
+    }
+  },
+  "attributes": {
+    "frame": "lithe",
+    "heightCm": 163,
+    "weightKg": 48
+  },
+  "culture": {
+    "culture": "civilised",
+    "standardChoice": [],
+    "professional": [
+      {
+        "skill": "Courtesy"
+      },
+      {
+        "skill": "Lore",
+        "specialisation": "Geography"
+      },
+      {
+        "skill": "Streetwise"
+      }
+    ],
+    "combatStyle": {
+      "name": "Meerish Slinger",
+      "weapons": "Sling, shortsword, peltast shield",
+      "trait": "Skirmishing"
+    },
+    "points": {
+      "Conceal": 5,
+      "Deceit": 5,
+      "Drive": 5,
+      "Influence": 10,
+      "Insight": 10,
+      "Locale": 5,
+      "Willpower": 10,
+      "Courtesy": 15,
+      "Lore (Geography)": 10,
+      "Streetwise": 15,
+      "Combat Style (Meerish Slinger)": 10
+    },
+    "passions": [
+      {
+        "verb": "Loyalty",
+        "subject": "Meeros",
+        "object": "place"
+      },
+      {
+        "verb": "Love",
+        "subject": "Kara",
+        "object": "romantic"
+      },
+      {
+        "verb": "Hate",
+        "subject": "Xenos",
+        "object": "averse"
+      }
+    ],
+    "nativeTongue": "Meerish"
+  },
+  "background": {
+    "socialClassRoll": 97,
+    "moneyRoll": 9,
+    "events": [
+      37,
+      1,
+      5
+    ],
+    "parentsRoll": 10,
+    "siblingsRoll": 50,
+    "siblings": 3,
+    "extendedFamilyRoll": 40,
+    "grandparents": 1,
+    "auntsAndUncles": 2,
+    "cousins": 3,
+    "reputationRoll": 20,
+    "connectionsRoll": 85,
+    "people": [
+      {
+        "kind": "Rival",
+        "name": "Xenos"
+      },
+      {
+        "kind": "Ally",
+        "name": "Kara"
+      },
+      {
+        "kind": "Contact",
+        "name": ""
+      }
+    ],
+    "marriageRoll": 50,
+    "children": [],
+    "passions": [
+      {
+        "verb": "Fear",
+        "subject": "Wolves",
+        "object": "race"
+      }
+    ]
+  },
+  "career": {
+    "career": "warrior",
+    "professional": [
+      {
+        "skill": "Lore",
+        "specialisation": "Military History"
+      },
+      {
+        "skill": "Lore",
+        "specialisation": "Strategy and Tactics"
+      },
+      {
+        "skill": "Survival"
+      }
+    ],
+    "styles": [
+      {
+        "use": "cultural"
+      },
+      {
+        "use": "new",
+        "style": {
+          "name": "Meerish Infantry",
+          "weapons": "Spear, hoplite shield, javelin",
+          "trait": "Formation Fighting"
+        }
+      }
+    ],
+    "points": {
+      "Athletics": 10,
+      "Endurance": 10,
+      "Evade": 10,
+      "Lore (Military History)": 10,
+      "Lore (Strategy and Tactics)": 10,
+      "Survival": 10,
+      "Unarmed": 10,
+      "Combat Style (Meerish Slinger)": 15,
+      "Combat Style (Meerish Infantry)": 15
+    }
+  },
+  "bonus": {
+    "hobby": {
+      "kind": "skill",
+      "pick": {
+        "skill": "Language",
+        "specialisation": "Thennalt"
+      }
+    },
+    "points": {
+      "Athletics": 25,
+      "Brawn": 25,
+      "Endurance": 25,
+      "Evade": 25,
+      "Perception": 25,
+      "Stealth": 25,
+      "Language (Thennalt)": 25,
+      "Combat Style (Meerish Slinger)": 25,
+      "Combat Style (Meerish Infantry)": 25,
+      "Willpower": 25
+    }
+  },
+  "ageing": [
+    {
+      "endurance": {
+        "d100": 1
+      },
+      "willpower": {
+        "d100": 1
+      }
+    },
+    {
+      "endurance": {
+        "d100": 1
+      },
+      "willpower": {
+        "d100": 1
+      }
+    }
+  ]
+}

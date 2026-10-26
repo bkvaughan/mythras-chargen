@@ -5,7 +5,7 @@ Work through the parts in order. Tick each checkbox when it is done. Each part e
 ## Status
 
 - Parts 1-10: complete, approved and committed (one commit per part on `main`)
-- Part 11 (Polish and release): in progress
+- Part 11: done and committed; published to GitHub Pages from the public repository `bkvaughan/mythras-chargen`. **Waiting for Brandon to create a few characters end to end and call v1 done**
 
 ---
 
@@ -184,11 +184,11 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 11: Polish and release
 
-- [ ] Full Playwright pass over every step and every culture
-- [ ] Accessibility pass: labels, focus order, contrast, keyboard-only completion
-- [ ] Review all help text: our own words, page references, no copied prose (CLAUDE.md, Copyright)
-- [ ] README final check
-- [ ] Decide hosting with Brandon (GitHub Pages or local only) and set it up if wanted
+- [x] Full Playwright pass over every step and every culture
+- [x] Accessibility pass: labels, focus order, contrast, keyboard-only completion
+- [x] Review all help text: our own words, page references, no copied prose (CLAUDE.md, Copyright)
+- [x] README final check
+- [x] Decide hosting with Brandon (GitHub Pages or local only) and set it up if wanted (decided: GitHub Pages, public repository `bkvaughan/mythras-chargen`)
 
 **Success criteria:** Brandon creates a few characters end to end and calls v1 done.
 
