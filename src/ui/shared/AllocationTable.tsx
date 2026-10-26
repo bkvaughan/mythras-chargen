@@ -10,16 +10,20 @@ interface Props {
   min: number
   max: number
   onChange: (key: string, points: number) => void
+  /** Also show the points from earlier stages, making this the full skill table. */
+  stages?: boolean
 }
 
 /** Points per skill for one stage, with base and running total. */
-export function AllocationTable({ label, keys, points, skills, min, max, onChange }: Props) {
+export function AllocationTable({ label, keys, points, skills, min, max, onChange, stages = false }: Props) {
   return (
     <table className="table" aria-label={label}>
       <thead>
         <tr>
           <th>Skill</th>
           <th className="num">Base</th>
+          {stages && <th className="num">Culture</th>}
+          {stages && <th className="num">Career</th>}
           <th className="num">Points</th>
           <th className="num">Total</th>
         </tr>
@@ -32,6 +36,8 @@ export function AllocationTable({ label, keys, points, skills, min, max, onChang
             <tr key={key}>
               <td>{key}</td>
               <td className="num">{row?.base ?? '-'}</td>
+              {stages && <td className="num">{row?.culture || ''}</td>}
+              {stages && <td className="num">{row?.career || ''}</td>}
               <td className="num">
                 <NumberInput
                   aria-label={`${key} points`}

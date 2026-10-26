@@ -42,6 +42,21 @@ describe('wizard shell', () => {
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Concept')
   })
 
+  test('a refresh returns to the step the player was on', () => {
+    saveToStorage({ ...newCharacter(), ...concept('pointsBuild') })
+    localStorage.setItem('mythras-chargen:step', 'characteristics')
+    render(<App />)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Characteristics')
+    fireEvent.click(screen.getByRole('button', { name: 'Back' }))
+    expect(localStorage.getItem('mythras-chargen:step')).toBe('concept')
+  })
+
+  test('a saved step that cannot be opened falls back to Concept', () => {
+    localStorage.setItem('mythras-chargen:step', 'career')
+    render(<App />)
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Concept')
+  })
+
   test('the Ageing step appears for characters aged 40 or more', () => {
     startWith({ concept: { ...concept('pointsBuild').concept, ageCategory: 'senior', age: 50 } })
     expect(step(/Ageing/)).toBeInTheDocument()

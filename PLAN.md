@@ -4,8 +4,8 @@ Work through the parts in order. Tick each checkbox when it is done. Each part e
 
 ## Status
 
-- Parts 1-7: complete, approved and committed (one commit per part on `main`)
-- Part 8 (Career, Bonus Skills and Ageing): in progress
+- Parts 1-8: complete, approved and committed (one commit per part on `main`)
+- Part 9 (Character sheet, print and export): in progress
 
 ---
 
@@ -148,10 +148,10 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 8: Career, Bonus Skills and Ageing steps
 
-- [ ] Career step: careers filtered by culture; up to three professional picks (R8); combat style slots (R9); allocate 100 points (0–15 each)
-- [ ] Bonus step: optional hobby skill; allocate the age category's pool within its per-skill maximum (R11)
-- [ ] Ageing step (R17), shown only for characters aged 40 or more: each band's Endurance and Willpower rolls, roll or enter results, losses shown against the characteristics
-- [ ] Full skill table preview showing base, culture, career, bonus and total for each skill
+- [x] Career step: careers filtered by culture; up to three professional picks (R8); combat style slots (R9); allocate 100 points (0–15 each)
+- [x] Bonus step: optional hobby skill; allocate the age category's pool within its per-skill maximum (R11)
+- [x] Ageing step (R17), shown only for characters aged 40 or more: each band's Endurance and Willpower rolls, roll or enter results, losses shown against the characteristics
+- [x] Full skill table preview showing base, culture, career, bonus and total for each skill
 
 **Tests:** component tests; Playwright test that continues Anathaym through her Warrior career and checks her post-career skills on screen; a test per age category for pool size and maximum; Playwright test for an Old character through the Ageing step.
 

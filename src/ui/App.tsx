@@ -1,30 +1,37 @@
-import { useState, type ComponentType } from 'react'
+import { useEffect, useState, type ComponentType } from 'react'
 import type { StepId } from '../state/derive.ts'
 import { useCharacter } from '../state/useCharacter.ts'
 import { Problems } from './shared/Problems.tsx'
 import { AttributesStep } from './steps/AttributesStep.tsx'
+import { AgeingStep } from './steps/AgeingStep.tsx'
 import { BackgroundStep } from './steps/BackgroundStep.tsx'
+import { BonusStep } from './steps/BonusStep.tsx'
+import { CareerStep } from './steps/CareerStep.tsx'
 import { CharacteristicsStep } from './steps/CharacteristicsStep.tsx'
 import { ConceptStep } from './steps/ConceptStep.tsx'
 import { CultureStep } from './steps/CultureStep.tsx'
 import type { StepProps } from './steps/types.ts'
 import { SummaryPanel } from './SummaryPanel.tsx'
-import { isReachable, STEP_LABELS, visibleSteps } from './wizard.ts'
+import { isReachable, loadStep, saveStep, STEP_LABELS, visibleSteps } from './wizard.ts'
 
-const STEP_COMPONENTS: Partial<Record<StepId, ComponentType<StepProps>>> = {
+const STEP_COMPONENTS: Record<StepId, ComponentType<StepProps>> = {
   concept: ConceptStep,
   characteristics: CharacteristicsStep,
   attributes: AttributesStep,
   culture: CultureStep,
   background: BackgroundStep,
+  career: CareerStep,
+  bonus: BonusStep,
+  ageing: AgeingStep,
 }
 
 export default function App() {
   const { character, derived, dispatch } = useCharacter()
-  const [current, setCurrent] = useState<StepId>('concept')
+  const [current, setCurrent] = useState<StepId>(() => loadStep())
   const steps = visibleSteps(derived)
-  // If the current step stops applying (Ageing after the age is lowered), fall back to the first step.
-  const step = steps.includes(current) ? current : steps[0]
+  // A step that no longer applies (Ageing after the age is lowered) or cannot be opened yet falls back to the first step.
+  const step = steps.includes(current) && isReachable(current, derived) ? current : steps[0]
+  useEffect(() => saveStep(step), [step])
   const index = steps.indexOf(step)
   const Step = STEP_COMPONENTS[step]
   const next = steps[index + 1]
@@ -58,11 +65,7 @@ export default function App() {
         </nav>
 
         <main className="panel">
-          {Step ? (
-            <Step character={character} derived={derived} dispatch={dispatch} />
-          ) : (
-            <h2>{STEP_LABELS[step]}</h2>
-          )}
+          <Step character={character} derived={derived} dispatch={dispatch} />
           <Problems status={derived.steps[step]} />
           <div className="step-footer">
             <button type="button" className="button secondary" disabled={index === 0} onClick={() => setCurrent(steps[index - 1])}>

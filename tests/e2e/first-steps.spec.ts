@@ -50,8 +50,10 @@ test('points build, with the summary matching a hand calculation', async ({ page
   await expect(page.getByRole('table', { name: 'Hit Points' }).getByRole('row', { name: /Chest/ })).toContainText('7')
 })
 
-test('the character in progress survives a reload', async ({ page }) => {
+test('the character in progress and the current step survive a reload', async ({ page }) => {
   await concept(page, /Points build/)
   await page.reload()
+  await expect(page.getByRole('heading', { level: 2 })).toHaveText('Characteristics')
+  await page.getByRole('button', { name: 'Back', exact: true }).click()
   await expect(page.getByLabel('Character name')).toHaveValue('Anathaym')
 })

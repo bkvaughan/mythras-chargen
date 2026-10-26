@@ -34,7 +34,7 @@ const passion = z.object({
   subjectPOW: z.int().optional(),
   subjectCHA: z.int().optional(),
 })
-const ageingRoll = z.object({ d100: z.int(), effect: z.int().optional(), loss: z.int().optional() })
+const ageingRoll = z.object({ d100, effect: z.int().min(1).max(6).optional(), loss: z.int().min(1).max(3).optional() })
 
 export const characterSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
