@@ -1,7 +1,6 @@
 import { CAREERS } from '../data/careers.ts'
 import { CULTURES } from '../data/cultures.ts'
 import type { CareerId, CultureId } from '../data/types.ts'
-import { ageingBands } from '../engine/ageing.ts'
 import { maritalStatus } from '../engine/background.ts'
 import { ageCategory, bonusEligibleSkills } from '../engine/bonus.ts'
 import { availableCareers, careerEligibleSkills } from '../engine/career.ts'
@@ -46,7 +45,15 @@ function apply(state: Character, action: Action): Character {
       const concept = { ...state.concept, ...action.changes }
       // A new generation method starts the characteristics afresh.
       const characteristics = concept.method === state.concept.method ? state.characteristics : { rolled: null, values: null }
-      return { ...state, concept, characteristics }
+      let background = state.background
+      // A new age category drops an age outside its range and events beyond its count.
+      if (concept.ageCategory !== state.concept.ageCategory) {
+        const category = ageCategory(concept.ageCategory)
+        const range = diceRange(category.ageDice)
+        if (concept.age !== null && (concept.age < range.min || concept.age > range.max)) concept.age = null
+        background = { ...background, events: background.events.slice(0, category.backgroundEvents) }
+      }
+      return { ...state, concept, characteristics, background }
     }
     case 'setCharacteristics':
       return { ...state, characteristics: { rolled: action.rolled, values: action.values } }
@@ -178,14 +185,7 @@ function prune(before: Character, c: Character): Character {
   }
   if (next.bonus) next.bonus = { ...next.bonus, points: keep(next.bonus.points, bonusEligibleSkills(skillChoices(next))) }
 
-  const age = ageCategory(next.concept.ageCategory)
-  const range = diceRange(age.ageDice)
-  if (next.concept.age !== null && (next.concept.age < range.min || next.concept.age > range.max)) {
-    next.concept = { ...next.concept, age: null }
-  }
-  next.ageing = next.ageing.slice(0, next.concept.age === null ? 0 : ageingBands(next.concept.age).length)
-
-  const background = { ...next.background, events: next.background.events.slice(0, age.backgroundEvents) }
+  const background = { ...next.background }
   // Children belong only to a married character (R21).
   const values = next.characteristics.values
   if (background.marriageRoll === null || (values && maritalStatus(background.marriageRoll, values) !== 'married')) {

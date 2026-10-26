@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { assignmentProblems, pointsBuildProblems, rollCharacteristics, withModifiers } from './characteristics.ts'
+import { assignmentProblems, pointsBuildProblems, rollCharacteristics, rolledProblems, withModifiers } from './characteristics.ts'
 import { seededRng } from './dice.ts'
 import { ANATHAYM } from './testFixtures.ts'
 
@@ -65,4 +65,14 @@ describe('points build (R3)', () => {
 test('withModifiers applies losses to a copy', () => {
   expect(withModifiers(ANATHAYM, { CON: -2, POW: -1 })).toEqual({ ...ANATHAYM, CON: 11, POW: 6 })
   expect(ANATHAYM.CON).toBe(13)
+})
+
+test('hand-entered rolls must be possible on the dice', () => {
+  expect(rolledProblems(ANATHAYM)).toEqual([])
+  expect(rolledProblems({ ...ANATHAYM, STR: 3, SIZ: 8, CHA: 18 })).toEqual([])
+  expect(rolledProblems({ ...ANATHAYM, STR: 2, SIZ: 7, CHA: 19 })).toEqual([
+    'STR must be 3-18 on 3d6',
+    'SIZ must be 8-18 on 2d6+6',
+    'CHA must be 3-18 on 3d6',
+  ])
 })

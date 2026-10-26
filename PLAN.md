@@ -2,6 +2,11 @@
 
 Work through the parts in order. Tick each checkbox when it is done. Each part ends with Brandon reviewing the result; do not start the next part until he approves. Read CLAUDE.md first: it holds the requirements, technical decisions, rules readings and coding standards this plan relies on.
 
+## Status
+
+- Parts 1-6: complete, approved and committed (one commit per part on `main`)
+- Part 7 (Culture and Background): in progress
+
 ---
 
 ## Part 1: Plan review and rules sign-off
@@ -116,13 +121,13 @@ Pure functions in `src/engine/` that implement every creation rule, fully unit t
 
 ## Part 6: Design direction and wizard shell
 
-- [ ] Propose two visual directions to Brandon (palette, typography, overall feel); he picks one; record it in CLAUDE.md as a Color Scheme section like the course project
-- [ ] Wizard shell: step list with completion state, next and back, jump to any reachable step
-- [ ] Persistent summary panel: name, characteristics, key attributes, points remaining in the current stage
-- [ ] Concept step: character and player name, gender, handedness, description, age category (R12) and age in years (R16), characteristic generation method
-- [ ] Characteristics step: roll in order, roll and assign with swaps, or points build with live remaining-points count
-- [ ] Attributes step: derived attributes shown read-only; frame choice and height and weight within the allowed range (roll or pick)
-- [ ] Layout works on a laptop and a tablet; keyboard accessible
+- [x] Propose two visual directions to Brandon (palette, typography, overall feel); he picks one; record it in CLAUDE.md as a Color Scheme section like the course project
+- [x] Wizard shell: step list with completion state, next and back, jump to any reachable step
+- [x] Persistent summary panel: name, characteristics, key attributes, points remaining in the current stage
+- [x] Concept step: character and player name, gender, handedness, description, age category (R12) and age in years (R16), characteristic generation method
+- [x] Characteristics step: roll in order, roll and assign with swaps, or points build with live remaining-points count
+- [x] Attributes step: derived attributes shown read-only; frame choice and height and weight within the allowed range (roll or pick)
+- [x] Layout works on a laptop and a tablet; keyboard accessible
 
 **Tests:** component tests for each step's validation messages; Playwright test that completes Concept, Characteristics and Attributes with each generation method.
 

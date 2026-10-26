@@ -140,7 +140,11 @@ describe('invalidation', () => {
     expect(c.background.events).toEqual([])
   })
 
-  test('Ageing rolls are trimmed to the bands the age passes', () => {
+  test('typing an age keeps the partial value', () => {
+    expect(run([{ type: 'setConcept', changes: { age: 2 } }], anathaym).concept.age).toBe(2)
+  })
+
+  test('Ageing rolls beyond the bands the age passes are ignored', () => {
     const rolls = [{ endurance: { d100: 1 }, willpower: { d100: 1 } }, { endurance: { d100: 1 }, willpower: { d100: 1 } }]
     const senior = run(
       [
@@ -149,8 +153,10 @@ describe('invalidation', () => {
       ],
       anathaym,
     )
-    expect(senior.ageing).toHaveLength(2)
-    expect(run([{ type: 'setConcept', changes: { age: 45 } }], senior).ageing).toHaveLength(1)
+    expect(deriveCharacter(senior).ageing?.outcomes).toHaveLength(2)
+    const younger = run([{ type: 'setConcept', changes: { age: 45 } }], senior)
+    expect(deriveCharacter(younger).ageing?.outcomes).toHaveLength(1)
+    expect(deriveCharacter(younger).steps.ageing.problems).toEqual([])
   })
 
   test('children are cleared unless the character is married (R21)', () => {
@@ -172,4 +178,15 @@ describe('Ageing in the derived view', () => {
     expect(derived.characteristics?.CON).toBe(11)
     expect(aged.characteristics.values?.CON).toBe(13)
   })
+})
+
+test('illegal characteristics derive nothing instead of failing', () => {
+  const c = run([
+    { type: 'setConcept', changes: { method: 'pointsBuild' } },
+    { type: 'setCharacteristics', rolled: null, values: { ...ANATHAYM, CON: 40 } },
+  ])
+  const derived = deriveCharacter(c)
+  expect(derived.attributes).toBeNull()
+  expect(derived.steps.characteristics.complete).toBe(false)
+  expect(derived.steps.attributes.problems).toEqual(['Set the characteristics first'])
 })

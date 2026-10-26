@@ -1,6 +1,6 @@
 import { CHARACTERISTIC_DICE, CHARACTERISTICS, POINTS_BUILD } from '../data/characteristics.ts'
 import type { Characteristic } from '../data/types.ts'
-import { roll, type Rng } from './dice.ts'
+import { diceRange, roll, type Rng } from './dice.ts'
 import type { Characteristics } from './types.ts'
 
 /** Rolls every characteristic with its own dice, in order (p. 9). */
@@ -8,6 +8,14 @@ export function rollCharacteristics(rng: Rng): Characteristics {
   const result = {} as Characteristics
   for (const c of CHARACTERISTICS) result[c] = roll(CHARACTERISTIC_DICE[c], rng)
   return result
+}
+
+/** Rolled or hand-entered results must be possible on each characteristic's dice. */
+export function rolledProblems(rolled: Characteristics): string[] {
+  return CHARACTERISTICS.flatMap((c) => {
+    const { min, max } = diceRange(CHARACTERISTIC_DICE[c])
+    return rolled[c] < min || rolled[c] > max ? [`${c} must be ${min}-${max} on ${CHARACTERISTIC_DICE[c]}`] : []
+  })
 }
 
 const sorted = (values: number[]) => [...values].sort((a, b) => a - b)

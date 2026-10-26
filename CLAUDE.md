@@ -66,7 +66,7 @@ The source documents are in the parent folder (`..`), outside this project. They
 | File | Use |
 |---|---|
 | `../core-rules_clean.txt` | Searchable text of the core rules. Page markers look like `===== page N =====`. Multi-column tables are garbled in this file, so never transcribe a table from it alone |
-| `../core-rules.pdf` | The authority for tables. It is large (95 MB): render only the pages you need (for example `pdftoppm -f 15 -l 15 -r 110 -png`) |
+| `../core-rules.pdf` | The authority for tables. It is large (95 MB): render only the pages you need. PDF page N is text marker N. Poppler (`pdftoppm`) is not installed on this Mac; use PyMuPDF in a throwaway venv outside the project: `python3 -m venv <scratch>/venv && <scratch>/venv/bin/pip install pymupdf`, then `pymupdf.open(path)[N-1].get_pixmap(dpi=110).save('pN.png')` and view the PNG |
 | `../character-workbook.pdf` | Official creation workbook (6 pages): summary tables and the skill allocation worksheet |
 | `../character-sheet-print.pdf` | Layout reference for the printable character sheet |
 | `../campaign-notes/mythras-1-chargen-skills-system.md` | Brandon's page-cited digest of core pp. 1–83. A good starting point, but it is a secondary source: verify against the book before using a number |
@@ -117,7 +117,7 @@ Interpretations used where the rules are ambiguous or silent. Status is **Propos
 
 The rules are copyright The Design Mechanism. The app needs their tables and numbers, but:
 
-- Never copy the book's prose into the app. Help text is short, in our own words, with a page reference ("see Mythras p. 14")
+- Never copy the book's prose into the app. Help text is short, in our own words, with a page reference ("see Mythras p. 14"). Page references shown to the user are the book's printed page numbers (text marker − 1), since players look them up in the printed book; code comments keep the text markers
 - Tables whose entries are prose (background events, combat style trait descriptions, social class background resources) are stored as one short paraphrase per entry in our own words, with the page reference
 - Keep the repository private unless Brandon has checked the licensing
 - Never commit the PDFs or `core-rules_clean.txt` (they live outside this folder; keep it that way)
@@ -132,6 +132,19 @@ The rules are copyright The Design Mechanism. The app needs their tables and num
 6. If the rules are unclear, stop and ask Brandon. Do not invent a ruling; record the answer under Rules Readings
 7. UI text uses Mythras terminology exactly as the book does (Combat Style, Action Points, Damage Modifier and so on)
 
+## Color Scheme
+
+Direction "Parchment & Ink", chosen by Brandon in Part 6: warm and bookish, echoing the rulebook. Defined as CSS custom properties in `src/index.css`.
+
+- Paper: `#f6f1e7` - page background
+- Surface: `#fffdf8` - cards and panels
+- Ink: `#2b2622` - body text
+- Header Bar: `#4a4440` - table headers, like the book's tables
+- Oxblood Accent: `#8b2e2a` - buttons, active step, links
+- Gold: `#b08a3e` - highlights, focus ring
+- Error: `#a3361f` - problems and invalid fields
+- Headings: EB Garamond in small caps (self-hosted via `@fontsource/eb-garamond`); body: system sans
+
 ## Commands
 
 - `npm run dev`: development server
@@ -145,3 +158,9 @@ The rules are copyright The Design Mechanism. The app needs their tables and num
 ## Working Documentation
 
 PLAN.md in this folder is the plan and the checklist. Read it before starting work, work through it in order, tick items off as they are completed, and do not start a part until Brandon has approved the previous one. Other working documents go in `docs/`.
+
+Workflow agreed with Brandon:
+
+- The Status section at the top of PLAN.md says where work stands. Update it at the end of each part and whenever a part's state changes
+- At the end of each part: run `npm test`, `npm run test:e2e`, `npm run typecheck`, `npm run lint` and `npm run build`; report to Brandon; commit on `main` (one commit per part, present tense) only after he approves
+- Rules questions go to Brandon as multiple-choice questions with a recommended option; each answer is recorded under Rules Readings straight away

@@ -56,7 +56,8 @@ export interface AgeingResult {
 export function resolveAgeing(c: Characteristics, choices: SkillChoices, age: number, rolls: AgeingBandRolls[]): AgeingResult {
   const bands = ageingBands(age)
   const problems: string[] = []
-  if (rolls.length !== bands.length) problems.push(`Make the Ageing rolls for ${bands.length} age bands`)
+  // Rolls beyond the bands passed (left over after the age was lowered) are ignored.
+  if (rolls.length < bands.length) problems.push(`Make the Ageing rolls for ${bands.length} age bands`)
 
   const current = { ...c }
   const modifiers: Partial<Characteristics> = {}

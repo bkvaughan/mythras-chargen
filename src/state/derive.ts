@@ -7,7 +7,7 @@ import { deriveAttributes, type Attributes } from '../engine/attributes.ts'
 import { backgroundProblems, socialClass, startingMoney } from '../engine/background.ts'
 import { ageCategory, bonusProblems } from '../engine/bonus.ts'
 import { careerProblems } from '../engine/career.ts'
-import { assignmentProblems, pointsBuildProblems, withModifiers } from '../engine/characteristics.ts'
+import { assignmentProblems, pointsBuildProblems, rolledProblems, withModifiers } from '../engine/characteristics.ts'
 import { ageProblems, heightWeightProblems } from '../engine/concept.ts'
 import { cultureProblems } from '../engine/culture.ts'
 import { passionValue } from '../engine/passions.ts'
@@ -49,6 +49,7 @@ function characteristicsProblems(c: Character): string[] {
   if (!values) return [method === 'pointsBuild' ? 'Spend the characteristic points' : 'Roll the characteristics']
   if (method === 'pointsBuild') return pointsBuildProblems(values)
   if (!rolled) return ['Roll the characteristics']
+  if (rolledProblems(rolled).length > 0) return rolledProblems(rolled)
   if (method === 'rollAndAssign') return assignmentProblems(rolled, values)
   return CHARACTERISTICS.every((k) => rolled[k] === values[k]) ? [] : ['Rolled in order, the characteristics cannot be changed']
 }
@@ -56,7 +57,9 @@ function characteristicsProblems(c: Character): string[] {
 /** Everything the UI displays, derived from the player's choices by the engine. */
 export function deriveCharacter(c: Character): DerivedCharacter {
   const choices = skillChoices(c)
-  const base = c.characteristics.values
+  const characteristicsIssues = characteristicsProblems(c)
+  // Nothing is derived from characteristics until they are legal, so lookups never leave their tables.
+  const base = characteristicsIssues.length === 0 ? c.characteristics.values : null
   const age = c.concept.age
   const ageingApplies = age !== null && ageingBands(age).length > 0
 
@@ -83,7 +86,7 @@ export function deriveCharacter(c: Character): DerivedCharacter {
     },
     steps: {
       concept: status([...ageProblems(c.concept.ageCategory, age), ...(c.concept.method ? [] : ['Choose how to generate characteristics'])]),
-      characteristics: status(characteristicsProblems(c)),
+      characteristics: status(characteristicsIssues),
       attributes: status(
         base
           ? heightWeightProblems(base.SIZ, c.attributes.frame, c.attributes.heightCm, c.attributes.weightKg)
